@@ -12,21 +12,11 @@ def main():
             debug = True
             
     if debug: print(db)
-    new = {}
-    new["EID"] = "222"
-    #db.insertRecord(new)
-    if debug: print(db)
-    var = ["EID"]
-    val = ["777"]
-    fields = ["EID", "Dept"]
-    recs = db.getRecords(var, val)
-    proj = db.project(fields, recs)
-    #db.printRecords(proj, fields)
-    #db.printRecords(db.project(["EID"]), ["EID"])
     run=True
     while run:
         print("Enter Query: ", end="")
         query = input()
+        queryRaw = query
         if query == "quit" or query == "q":
             break;
         cmds = query.split(".")
@@ -39,10 +29,10 @@ def main():
         if debug: print(qtype, query)
 
         if qtype == "find":
-            condit = [x.strip() for x in query.split(",", 1)[0].split("(")[1].split(")")[0].split("and")]
+            condit = queryRaw.split(".")[2].split(",")[0].split("(", 1)[1]
             fields = [x.strip() for x in query.split(",", 1)[1].split("[")[1].split("]")[0].split(",")]
 
-            recs = db.getRecords(var, val, operator)
+            recs = db.getRecords(condit)
             proj = db.project(fields, recs)
             db.printRecords(proj, fields)
 

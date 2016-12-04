@@ -1,8 +1,9 @@
-import json
+import json, re, uuid
 
 class uudb:
     def __init__(self, inFile=None):
         self._inFile = inFile
+        self._record = None
         if inFile:
             processIn()
         with open("final.json", "r") as jsonData:
@@ -12,19 +13,19 @@ class uudb:
         self._db["final"].append(d)
 
     def meetsCond(self, record, cond):
-        x = record.split("=").strip()
+        x = cond.split("=")
         op = "="
         if len(x) < 2:
-            x = record.split("<>").strip()
+            x = cond.split("<>")
             op = "<>"
         if len(x) < 2:
-            x = record.split("<").strip()
+            x = cond.split("<")
             op = "<"
         if len(x) < 2:
-            x = record.split(">").strip()
+            x = cond.split(">")
             op = ">"
-        var = x[0]
-        val = x[1]
+        var = str(x[0])
+        val = str(x[1])
         if op == "=":
             if record.get(var) == val:
                 return True
@@ -48,20 +49,24 @@ class uudb:
         else:
             return False
 
+    def rep(self, match):
+        x = "self.meetsCond(" + str(self._record) + ", \"" + match.group() + "\")"
+        return x
+
     def getRecords(self, conds):
+        if conds == "()":
+            return self._db["final"]
         result = []
-        
         for record in self._db["final"]:
-            for i in range(len(var)):
-                if record.get(var[i]) != val[i]:
-                    break
-                else:
-                    result.append(record)
+            self._record = record
+            cond = re.sub(r'\w+([>=<]|<>)\w+', self.rep, conds)
+            if eval(cond):
+                result.append(record)
         return result
 
     def project(self, fields, records=None): # takes a list of fields to project
-        if records == None:
-            records = self._db["final"]
+        if fields[0] == "":
+            return records
         result = []
         p = 1
         for record in records:
@@ -73,6 +78,11 @@ class uudb:
 
     def printRecords(self, records, fields=[]):
         for record in records:
+            if fields[0] == "":
+                for field in record.keys():
+                    print(field, ": ", record[field], sep="", end=" ")
+            print()
+            continue
             for field in fields:
                 if record.get(field) != None:
                     print(field, ": ", record[field], sep="", end=" ")
@@ -97,6 +107,7 @@ class uudb:
                     exit(1)
                 line = [x.strip() for x in line]
                 line = [x.strip(":") for x in line]
+                record["ID"] = str(uuid.uuid4().int)
                 for i in range(0, len(line), 2):
                     record[line[i]] = line[i+1]
                 records.append(record)
