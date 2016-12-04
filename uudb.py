@@ -1,4 +1,4 @@
-import json, re, uuid
+import json, re, uuid, sys
 
 class uudb:
     def __init__(self, inFile=None):
@@ -77,16 +77,15 @@ class uudb:
         return result
 
     def printRecords(self, records, fields=[]):
-        for record in records:
-            if fields[0] == "":
-                for field in record.keys():
-                    print(field, ": ", record[field], sep="", end=" ")
-            print()
-            continue
-            for field in fields:
-                if record.get(field) != None:
-                    print(field, ": ", record[field], sep="", end=" ")
-            print()
+        if fields[0] == "":
+            for record in records:
+                print(" ".join([x + ": " + record[x] for x in record.keys()]))
+        else:
+            for record in records:
+                for field in fields:
+                    if record.get(field) != None:
+                        print(field, ": ", record[field], sep="", end=" ")
+                print()
 
     def avg(self, field):
         values = []
