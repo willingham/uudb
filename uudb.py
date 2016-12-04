@@ -101,8 +101,9 @@ class uudb:
             for line in fil:
                 print("Importing:", line, end="")
                 record = {}
-                line = line.split(" ")
+                line = line.strip().split(" ")
                 if len(line) % 2 != 0:
+                    print("Error: Invalid Line -->", str(line))
                     exit(1)
                 line = [x.strip() for x in line]
                 line = [x.strip(":") for x in line]

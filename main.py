@@ -10,6 +10,10 @@ def main():
             db.clear()
         elif (sys.argv[1] == "-debug"):
             debug = True
+        elif (sys.argv[1] == "-h" or sys.argv[1] == "--help"):
+            print("UUDB Usage:")
+            print("  python3 main.py [-load inputFile] [-nuke]")
+            exit(0)
             
     if debug: print(db)
     run=True
