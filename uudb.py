@@ -37,15 +37,9 @@ class uudb:
             else:
                 return False
         elif op == "<":
-            if int(record.get(var)) < int(val):
-                return True
-            else:
-                return False
+            return record.get(var) and int(record.get(var)) < int(val)
         elif op == ">":
-            if int(record.get(var)) > int(val):
-                return True
-            else:
-                return False
+            return record.get(var) and int(record.get(var)) > int(val)
         else:
             return False
 
