@@ -81,7 +81,7 @@ class uudb:
             if record.get(field) != None:
                 values.append(record[field])
         values = [int(x) for x in values]
-        return sum(values)/len(values) 
+        return sum(values)/len(values) if len(values) > 0 else None 
         
     def load(self, fName):
         records = []
