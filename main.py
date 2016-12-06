@@ -1,4 +1,4 @@
-import sys, os, ast, uudb
+import sys, os, ast, readline, uudb
 
 def main():
     debug = False
