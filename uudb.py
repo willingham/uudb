@@ -27,15 +27,9 @@ class uudb:
         var = str(x[0])
         val = str(x[1])
         if op == "=":
-            if record.get(var) == val:
-                return True
-            else:
-                return False
+            return record.get(var) == val:
         elif op == "<>":
-            if not record.get(var) == val:
-                return True
-            else:
-                return False
+            return not record.get(var) == val:
         elif op == "<":
             return record.get(var) and int(record.get(var)) < int(val)
         elif op == ">":
