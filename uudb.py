@@ -29,7 +29,7 @@ class uudb:
         if op == "=":
             return record.get(var) == val
         elif op == "<>":
-            return not record.get(var) == val
+            return record.get(var) != None and record.get(var) != val
         elif op == "<":
             return record.get(var) and int(record.get(var)) < int(val)
         elif op == ">":
