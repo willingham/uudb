@@ -4,12 +4,9 @@ def main():
     debug = False
     db = uudb.uudb()
     if len(sys.argv) > 1:
-        if (sys.argv[1] == "-load"):
-            db.load(sys.argv[2])
-        elif (sys.argv[1] == "-nuke"):
-            db.clear()
-        elif (sys.argv[1] == "-debug"):
-            debug = True
+        if (sys.argv[1] == "-load"): db.load(sys.argv[2])
+        elif (sys.argv[1] == "-nuke"): db.clear()
+        elif (sys.argv[1] == "-debug"): debug = True
         elif (sys.argv[1] == "-h" or sys.argv[1] == "--help"):
             print("UUDB Usage:")
             print("  python3 main.py [-load inputFile] [-nuke]")
@@ -18,12 +15,12 @@ def main():
     if debug: print(db)
     run=True
     while run:
-        query = input("Enter query: ")
-        queryRaw = query
-        if query == "quit" or query == "q":
-            break;
+        query = queryRaw = input("Enter query: ")
+        if query == "quit" or query == "q": break
         cmds = query.split(".")
-        if len(cmds) < 3 or cmds[0] != "db" or not (cmds[2].startswith("find") or cmds[2].startswith("avg") or cmds[2].startswith("min") or cmds[2].startswith("count")):
+        if len(cmds) < 3 or cmds[0] != "db" or not \
+                (cmds[2].startswith("find") or cmds[2].startswith("avg") or \
+                 cmds[2].startswith("min") or cmds[2].startswith("count")):
             print("    Error: Invalid query. Try again.")
             continue
         
