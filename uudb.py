@@ -48,8 +48,11 @@ class uudb:
         for record in self._db["final"]:
             self._record = record
             cond = re.sub(r'\w+([>=<]|<>)\w+', self.rep, conds)
-            if eval(cond):
-                result.append(record)
+            try:
+                if eval(cond):
+                    result.append(record)
+            except:
+                return None
         return result
 
     def project(self, fields, records=None): # takes a list of fields to project

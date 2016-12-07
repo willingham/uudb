@@ -18,8 +18,7 @@ def main():
     if debug: print(db)
     run=True
     while run:
-        print("Enter Query: ", end="")
-        query = input()
+        query = input("Enter query: ")
         queryRaw = query
         if query == "quit" or query == "q":
             break;
@@ -37,6 +36,9 @@ def main():
             fields = [x.strip() for x in query.split(",", 1)[1].split("[")[1].split("]")[0].split(",")]
 
             recs = db.getRecords(condit)
+            if not recs:
+                print("    Error: Invalid query. Try again.")
+                continue
             proj = db.project(fields, recs)
             db.printRecords(proj, fields)
 
