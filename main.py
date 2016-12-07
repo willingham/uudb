@@ -37,16 +37,20 @@ def main():
                 print("    Error: Invalid query. Try again.")
                 continue
             proj = db.project(fields, recs)
-            print("Records found:", db.printRecords(proj, fields))
+            total = db.printRecords(proj, fields)
+            if total > 0: print("Records found:", total)
 
         elif qtype == "avg":
-            print("avg_", query, ": ", db.avg(query), sep="")
+            x = db.avg(query)
+            if not x == None: print("avg_", query, ": ", x, sep="")
         
         elif qtype == "min":
-            print("min_", query, ": ", db.minimum(query), sep="")
+            x = db.minimum(query)
+            if not x == None: print("min_", query, ": ", x, sep="")
 
         elif qtype == "count":
-            print("count_", query, ": ", db.count(query), sep="")
+            x = db.count(query)
+            if not (x == None or x == 0): print("count_", query, ": ", x, sep="")
     db.close()
 
 main()
