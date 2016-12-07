@@ -33,7 +33,7 @@ def main():
             fields = [x.strip() for x in query.split(",", 1)[1].split("[")[1].split("]")[0].split(",")]
 
             recs = db.getRecords(condit)
-            if not recs:
+            if recs == None:
                 print("    Error: Invalid query. Try again.")
                 continue
             proj = db.project(fields, recs)
