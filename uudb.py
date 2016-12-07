@@ -68,15 +68,19 @@ class uudb:
         return result
 
     def printRecords(self, records, fields=[]):
+        printed = 0
         if fields[0] == "":
             for record in records:
+                printed += 1
                 print(" ".join([x + ": " + record[x] for x in record.keys()]))
         else:
             for record in records:
                 for field in fields:
                     if record.get(field) != None:
                         print(field, ": ", record[field], sep="", end=" ")
+                printed += 1
                 print()
+        return printed
 
     def avg(self, field):
         values = []
@@ -85,6 +89,28 @@ class uudb:
                 values.append(record[field])
         values = [int(x) for x in values]
         return sum(values)/len(values) if len(values) > 0 else None 
+    
+    def minimum(self, field):
+        values = []
+        for record in self._db["final"]:
+            if record.get(field) != None:
+                values.append(record[field])
+        values = [int(x) for x in values]
+        if values == []:
+            return None
+        mini = values[0]
+        for value in values:
+            if value < mini:
+                mini = value
+        return mini if mini else None 
+    
+    def count(self, field):
+        values = []
+        for record in self._db["final"]:
+            if record.get(field) != None:
+                values.append(record[field])
+        values = [int(x) for x in values]
+        return len(values)
         
     def load(self, fName):
         records = []

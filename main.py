@@ -23,7 +23,7 @@ def main():
         if query == "quit" or query == "q":
             break;
         cmds = query.split(".")
-        if len(cmds) < 3 or cmds[0] != "db" or not (cmds[2].startswith("find") or cmds[2].startswith("avg")):
+        if len(cmds) < 3 or cmds[0] != "db" or not (cmds[2].startswith("find") or cmds[2].startswith("avg") or cmds[2].startswith("min") or cmds[2].startswith("count")):
             print("    Error: Invalid query. Try again.")
             continue
         
@@ -40,12 +40,16 @@ def main():
                 print("    Error: Invalid query. Try again.")
                 continue
             proj = db.project(fields, recs)
-            db.printRecords(proj, fields)
+            print("Records found:", db.printRecords(proj, fields))
 
         elif qtype == "avg":
             print("avg_", query, ": ", db.avg(query), sep="")
+        
+        elif qtype == "min":
+            print("min_", query, ": ", db.minimum(query), sep="")
 
-
+        elif qtype == "count":
+            print("count_", query, ": ", db.count(query), sep="")
     db.close()
 
 main()

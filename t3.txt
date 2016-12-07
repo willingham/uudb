@@ -1,4 +1,0 @@
-EID: 555 age: 22 name: thomas
-EID: 777 age: 34 name: joe
-EID: 888 age: 38 name: sally
-EID: 222 age: 15 name: doe
